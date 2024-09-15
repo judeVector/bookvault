@@ -1,10 +1,7 @@
 from django.contrib.auth import get_user_model
 
-from django.contrib.auth import authenticate
-
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
-from rest_framework.exceptions import AuthenticationFailed
 
 User = get_user_model()
 
