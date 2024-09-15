@@ -27,8 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = "account.AdminUser"
-
 
 # Application definition
 
@@ -40,7 +38,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Custom Apps
-    "account",
     "api",
     # Third party apps
     "rest_framework",
