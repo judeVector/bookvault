@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,6 +31,11 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = "account.User"
 
 
+REST_FRAMEWORK = {
+    "NON_FIELD_ERRORS_KEY": "errors",
+}
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +48,9 @@ INSTALLED_APPS = [
     # Custom Apps
     "account",
     "api",
+    # Third-Party Apps
+    "rest_framework",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
