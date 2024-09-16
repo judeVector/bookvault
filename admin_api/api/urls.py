@@ -4,9 +4,13 @@ from .views import (
     AdminBookDeleteView,
     AdminUserListView,
     AdminBorrowedBooksView,
+    CreateUserFromFrontendAPI,
 )
 
 urlpatterns = [
+    path(
+        "users/create/", CreateUserFromFrontendAPI.as_view(), name="admin-user-create"
+    ),
     path("books/", AdminBookCreateView.as_view(), name="admin-book-create"),
     path(
         "books/<int:pk>/delete/",
