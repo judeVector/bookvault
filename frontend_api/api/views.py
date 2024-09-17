@@ -8,6 +8,30 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import User, Book, Borrow
 from .serializers import UserSerializer, BookSerializer, BorrowSerializer
 from .filters import BookFilter
+from .helpers import publish_user_creation_message
+
+
+# class UserCreateView(generics.CreateAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+
+#     def perform_create(self, serializer):
+#         user = serializer.save()
+#         admin_api_url = "http://localhost:7000/api/users/create/"
+#         headers = {"Content-Type": "application/json"}
+#         data = {
+#             "email": user.email,
+#             "first_name": user.first_name,
+#             "last_name": user.last_name,
+#             "created_at": user.created_at.isoformat(),
+#         }
+
+#         try:
+#             response = requests.post(admin_api_url, json=data, headers=headers)
+#             response.raise_for_status()
+#         except requests.exceptions.RequestException as e:
+#             print(f"Error creating user in Admin API: {e}")
+#             raise serializers.ValidationError("Failed to notify the Admin API.")
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -16,23 +40,7 @@ class UserCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         user = serializer.save()
-
-        # This Notifies the Admin API about the new user
-        admin_api_url = "http://localhost:7000/api/users/create/"
-        headers = {"Content-Type": "application/json"}
-
-        # Data to send to the Admin API
-        data = {
-            "email": user.email,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "created_at": user.created_at.isoformat(),
-        }
-
-        response = requests.post(admin_api_url, json=data, headers=headers)
-
-        if response.status_code != 201:
-            raise Exception(f"Error creating user in Admin API: {response.text}")
+        publish_user_creation_message(user)
 
 
 class BookListView(generics.ListAPIView):
@@ -43,11 +51,6 @@ class BookListView(generics.ListAPIView):
 
 
 class BookDetailView(generics.RetrieveAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-
-
-class CreateBookView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
@@ -64,6 +67,17 @@ class BorrowBookView(generics.CreateAPIView):
         if book.available:
             book.available = False
             book.save()
-            serializer.save(book=book)
+            serializer.save(book=book, user=self.request.user)
         else:
             raise serializers.ValidationError({"book": "Book is not available."})
+
+
+# Only meant for Admin interface only
+class CreateBookView(generics.CreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+
+class DeleteBookView(generics.DestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer

@@ -6,6 +6,7 @@ from api.views import (
     BookDetailView,
     BorrowBookView,
     CreateBookView,
+    DeleteBookView,
 )
 
 urlpatterns = [
@@ -13,5 +14,7 @@ urlpatterns = [
     path("books/", BookListView.as_view(), name="book-list"),
     path("books/<int:pk>/", BookDetailView.as_view(), name="book-detail"),
     path("books/<int:book_id>/borrow/", BorrowBookView.as_view(), name="book-borrow"),
+    # Admin API
     path("books/create/", CreateBookView.as_view(), name="create_book"),
+    path("books/<int:pk>/delete/", DeleteBookView.as_view(), name="delete_book"),
 ]
