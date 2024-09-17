@@ -19,6 +19,10 @@ class Book(models.Model):
     publisher = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
     available = models.BooleanField(default=True)
+    borrowed_until = models.DateField(null=True, blank=True)
+    borrowed_by = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.SET_NULL
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
