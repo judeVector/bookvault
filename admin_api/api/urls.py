@@ -3,8 +3,9 @@ from .views import (
     AdminBookCreateView,
     AdminBookDeleteView,
     AdminUserListView,
-    AdminBorrowedBooksView,
     CreateUserFromFrontendAPI,
+    UserBorrowedBooksListView,
+    UnavailableBooksListView,
 )
 
 urlpatterns = [
@@ -18,7 +19,6 @@ urlpatterns = [
         name="admin-book-delete",
     ),
     path("users/", AdminUserListView.as_view(), name="admin-user-list"),
-    path(
-        "books/borrowed/", AdminBorrowedBooksView.as_view(), name="admin-borrowed-books"
-    ),
+    path("borrowed/", UserBorrowedBooksListView.as_view(), name="borrowed-books"),
+    path("unavailable/", UnavailableBooksListView.as_view(), name="unavailable-books"),
 ]
