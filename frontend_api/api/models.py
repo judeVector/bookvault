@@ -21,7 +21,7 @@ class Book(models.Model):
     borrowed_by = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.SET_NULL
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField()
 
     def __str__(self):
         return f"{self.title} by {self.author}"
