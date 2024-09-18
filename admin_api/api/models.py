@@ -36,3 +36,13 @@ class AdminBook(models.Model):
     category = models.CharField(max_length=100)
     available = models.BooleanField(default=True)
     borrowed_until = models.DateField(null=True, blank=True)
+
+
+class Borrow(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    borrow_date = models.DateField(auto_now_add=True)
+    return_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.user} borrowed {self.book} on {self.borrow_date}"
