@@ -10,12 +10,6 @@ from .serializers import (
 from .message_broker.publisher import publish_book_creation_message
 
 
-# # Only meant for Frontend interface only
-class CreateUserFromFrontendAPI(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
 class AdminUserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -49,11 +43,6 @@ class AdminBookDeleteView(generics.DestroyAPIView):
         publish_book_creation_message("book_deleted", data)
 
         super().perform_destroy(instance)
-
-
-# class AdminBorrowedBooksView(generics.ListAPIView):
-#     queryset = AdminBook.objects.filter(available=False)
-#     serializer_class = AdminBookSerializer
 
 
 class UserBorrowedBooksListView(generics.ListAPIView):
