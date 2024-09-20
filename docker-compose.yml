@@ -7,6 +7,13 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: user
       RABBITMQ_DEFAULT_PASS: password
+    networks:
+      - my_network
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmqctl status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   admin_api:
     build:
@@ -15,13 +22,18 @@ services:
       - ENVIRONMENT=docker
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=user
+      - RABBITMQ_PASS=password
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     ports:
       - "7000:7000"
     volumes:
       - .:/app
     command: ["./start.sh"]
+    networks:
+      - my_network
 
   frontend_api:
     build:
@@ -30,10 +42,19 @@ services:
       - ENVIRONMENT=docker
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=user
+      - RABBITMQ_PASS=password
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     ports:
       - "8000:8000"
     volumes:
       - .:/app
     command: ["./start.sh"]
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
