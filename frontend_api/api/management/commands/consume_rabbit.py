@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from api.helpers import consume_messages
+from api.message_broker.consumer import consume_messages
 
 
 class Command(BaseCommand):
