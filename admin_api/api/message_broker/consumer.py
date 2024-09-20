@@ -6,13 +6,15 @@ from api.messages import messages
 
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "localhost")
 RABBITMQ_PORT = os.getenv("RABBITMQ_PORT", 5672)
+RABBITMQ_USER = os.getenv("RABBITMQ_USER", "guest")
+RABBITMQ_PASS = os.getenv("RABBITMQ_PASS", "guest")
 
 
 def consume_user_messages():
     connection_params = pika.ConnectionParameters(
         host=RABBITMQ_HOST,
         port=int(RABBITMQ_PORT),
-        credentials=pika.PlainCredentials("guest", "guest"),
+        credentials=pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASS),
     )
 
     connection = pika.BlockingConnection(connection_params)
@@ -33,7 +35,7 @@ def consume_borrow_messages():
     connection_params = pika.ConnectionParameters(
         host=RABBITMQ_HOST,
         port=int(RABBITMQ_PORT),
-        credentials=pika.PlainCredentials("guest", "guest"),
+        credentials=pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASS),
     )
 
     connection = pika.BlockingConnection(connection_params)
