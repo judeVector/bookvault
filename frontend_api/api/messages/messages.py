@@ -11,7 +11,6 @@ def handle_book_creation_message(ch, method, properties, body):
     if event == "book_created":
         # Add book to frontend database
         Book.objects.create(
-            id=data["id"],
             title=data["title"],
             author=data["author"],
             publisher=data["publisher"],
