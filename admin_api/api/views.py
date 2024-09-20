@@ -24,7 +24,6 @@ class AdminBookCreateView(generics.CreateAPIView):
 
         # Send a message to RabbitMQ
         data = {
-            "id": book.id,
             "title": book.title,
             "author": book.author,
             "publisher": book.publisher,
