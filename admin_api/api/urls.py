@@ -8,13 +8,13 @@ from .views import (
 )
 
 urlpatterns = [
-    path("books/", AdminBookCreateView.as_view(), name="admin-book-create"),
+    path("books/", AdminBookCreateView.as_view(), name="admin_book_create"),
     path(
         "books/<int:pk>/delete/",
         AdminBookDeleteView.as_view(),
-        name="admin-book-delete",
+        name="admin_book_delete",
     ),
-    path("users/", AdminUserListView.as_view(), name="admin-user-list"),
-    path("borrowed/", UserBorrowedBooksListView.as_view(), name="borrowed-books"),
-    path("unavailable/", UnavailableBooksListView.as_view(), name="unavailable-books"),
+    path("users/", AdminUserListView.as_view(), name="admin_user_list"),
+    path("borrowed/", UserBorrowedBooksListView.as_view(), name="borrowed_books"),
+    path("unavailable/", UnavailableBooksListView.as_view(), name="unavailable_books"),
 ]
