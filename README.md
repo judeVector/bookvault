@@ -23,9 +23,10 @@
 ## Tech Stack
 
 - **Backend**: Django REST Framework (DRF)
-- **Data Stores**: PostgreSQL (or other DB solutions as needed per service)
+- **Data Stores**: SQLiteDB (other DB solutions can be utilized if needed)
 - **Containerization**: Docker for both services
 - **Testing**: Unit and integration tests for service validation
+- **Messaging Queue**: Used RabbitMQ for communication between the two services
 
 ## Architecture
 
